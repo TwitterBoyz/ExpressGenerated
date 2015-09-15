@@ -1,11 +1,17 @@
 
 <header>
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>Log-In</h1>
 </header>
 <section>
+
 <form class="test" action="/login" method="post">
-  <!-- <input type="text" name="name" value=""> -->
+Username:<input type="text" name="username" id= "username" value=""><br>
+Password:<input type="password" name="password" id= "password" value="">
+  <input type="submit" name="name" value="Sign-In!">
+</form>
+<br>
+<h4> Not A Member? </h4>
+<form class="signUp" action="/signUp" method="post">
   <input type="submit" name="name" value="Sign-Up!">
 </form>
 </section>

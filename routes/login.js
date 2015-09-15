@@ -3,11 +3,12 @@ var router = express.Router();
 
 /* GET login page. */
 router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Login Page' });
+  console.log("login page!");
+  res.render('login');
 });
 
-router.post('/index', function(req, res, next) {
-  res.render('index');
+router.post('/login', function(req, res, next) {
+  res.render('login');
 });
 
 module.exports = router;
