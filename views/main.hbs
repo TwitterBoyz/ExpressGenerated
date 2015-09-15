@@ -1,0 +1,34 @@
+<header>
+<a href="/tweet">
+<div class="tweet">
+  <h1>Tweet</h1>
+
+</div>
+</a>
+<div class="incognito">
+  <h1>Switch to Incognito</h1>
+</div>
+<div class="viewProfile">
+  <a href="/user">
+  <h1>View Profile</h1>
+  </a>
+</div>
+</header>
+<div>
+  logout
+  <form class="logout" action="/logout" method="post">
+    <input type="submit" name="name" value="Log-Out">
+  </form>
+</div>
+<div class="mainBody">
+  <section>
+  Tweets go here
+  <div id="tweets">
+    {{#each allTweets}}
+    <!-- <div class="username"> -->
+      {{username}} wrote: {{message}}
+    <!-- </div> -->
+  <!-- {{message}} -->
+  {{/each}}
+  </div>
+</section>

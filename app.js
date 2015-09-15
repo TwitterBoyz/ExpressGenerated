@@ -7,12 +7,10 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var login = require('./routes/login');
-var signUp = require('./routes/signUp');
 
 var app = express();
 
-app.locals.users = ["hello"];
+app.locals.users = [];
 app.locals.tweets = [];
 
 // view engine setup
@@ -29,8 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/login', login);
-app.use('/signUp', signUp);
 
 
 // catch 404 and forward to error handler
