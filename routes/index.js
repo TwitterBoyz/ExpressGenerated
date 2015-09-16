@@ -253,8 +253,29 @@ router.post('/delete', function(req, res, next) {
 
 
 router.post('/editUser', function(req, res, next) {
-
   res.render('editUser');
 });
 
+
+
+
+router.post('/age', function(req, res, next){
+  var age = req.body.age;
+  var username = req.cookies.name;
+  info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
+  info.age = age;
+  console.log(info.age);
+  res.render('editUser', {"age": age})
+})
+
+router.post('/sex', function(req, res, next){
+  var sex = req.body.sex;
+  res.render('editUser', {"sex": sex})
+})
+router.post('/location', function(req, res, next){
+  res.render('editUser')
+})
+router.post('/about', function(req, res, next){
+  res.render('editUser')
+})
 module.exports = router;

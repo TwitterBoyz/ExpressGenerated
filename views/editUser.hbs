@@ -1,7 +1,38 @@
-<form class="edit" action="/user" method="post">
-Age :<input type="text" name="age" id="age" value="">
-Sex :<input type="text" name="sex" id="sex" value="">
-Location :<input type="text" name="locate" id= "location" value="">
-About me :<input type="text" name="bio" id="bio" value="">
-<input type="submit" name="submit" value="Submit Changes">
+
+<form class="edit" action="/age" method="post">
+  Age :<input type="text" name="age" id="age" value="">
+  <input type="submit" name="name" value="Edit">
+</form>
+<div class="age input">
+  Age: {{age}}
+</div>
+<br>
+<form class="edit" action="/sex" method="post">
+  Sex :<input type="text" name="sex" id="sex" value="">
+    <input type="submit" name="name" value="Edit">
+</form>
+<div class="">
+  Sex: {{sex}}
+</div>
+<br>
+<form class="edit" action="/location" method="post">
+  Location :<input type="text" name="locate" id= "location" value="">
+    <input type="submit" name="name" value="Edit">
+</form>
+<div class="">
+  Location: {{location}}
+</div>
+<br>
+<form class="edit" action="/about" method="post">
+  About me :<input type="text" name="bio" id="bio" value="">
+    <input type="submit" name="name" value="Edit">
+</form>
+<div class="">
+  About me: {{about}}
+</div>
+<br>
+
+<form class="editAll" action="/user" method="post">
+
+<input type="submit" name="name" value="Submit Changes">
 </form>
