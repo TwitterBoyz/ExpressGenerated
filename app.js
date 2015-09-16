@@ -10,6 +10,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.locals.userInfo = [];
 app.locals.users = [];
 app.locals.tweets = [];
 
