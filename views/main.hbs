@@ -1,6 +1,3 @@
-<head>
-<meta http-equiv="refresh" content="60">
-</head>
 <header>
 <a href="/tweet">
 <div class="tweet">
@@ -11,7 +8,7 @@
   <h1>Switch to Incognito</h1>
 </div>
 <div class="viewProfile">
-  <form class="user" action="/user" method="post">
+  <form class="user" action="/user" method="get">
     <input type="submit" name="user" value="View Profile">
   </form>
 </div>
@@ -27,7 +24,7 @@
 <div class="mainBody">
   <form class="message" action="/main" method="post">
     <input type="text" name="message" id = "message" value="">
-    <input type="submit" onclick="document.getElementById('ring').play()" name="submit"  value="Submit">
+    <input type="submit" onclick="firstCallback()" name="submit"  value="Submit">
   </form>
 
   <section>
@@ -43,3 +40,25 @@
   </form>
 </section>
 </div>
+<script type="text/javascript">
+function callback() {
+  console.log("i will check for notifications")
+  $.getJSON("/posts", function (data) {
+      var tweets = data
+      if(data.tweets.length > tweets.tweets.length){
+      console.log("You have new tweets");}
+      else {
+        console.log("no new tweets");
+      }
+});
+
+
+$.post
+
+  function firstCallback() {
+    console.log("callback !")
+    setInterval(callback, 6000)
+    return true;
+  }
+
+</script>
