@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 
+///////////////
+//////GET//////
+///////////////
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var allTweets = req.app.locals.tweets;
@@ -13,17 +17,14 @@ router.get('/', function(req, res, next) {
   }
 });
 
+// GET user page
 router.get('/user', function( req, res, next) {
   if (req.cookies.name){
   var username = req.cookies.name;
   var message = req.body.message;
   var allTweets = req.app.locals.tweets;
   var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
-  var ownMessages = [];
-  for (var k = 0; k < uniqueMessages.length; k ++) {
-    ownMessages.push(uniqueMessages[k].message);
-  }
-  res.render('user', {"username": username, "ownMessages": ownMessages});
+  res.render('user', {"username": username, "uniqueMessages": uniqueMessages});
 }
   else {
     res.render('login');
@@ -31,6 +32,22 @@ router.get('/user', function( req, res, next) {
   }
 });
 
+// GET user profile
+router.get('/user/:username', function(req, res, next) {
+  var allTweets = req.app.locals.tweets;
+  var user = req.params.username;
+  var uniqueMessages = (_.filter(allTweets, {"username": user}, 'messages'));
+  console.log(user);
+  if (req.cookies.name){
+    res.render('otherUser', {"username": user, "uniqueMessages": uniqueMessages});
+}
+else {
+  res.render('login');
+  console.log("no cookies for you!");
+}
+});
+
+// GET login page
 router.get('/login', function(req,res,next) {
   var allTweets = req.app.locals.tweets;
   if (req.cookies.name){
@@ -43,6 +60,7 @@ router.get('/login', function(req,res,next) {
   }
 });
 
+// GET signUp page
 router.get('/signUp', function(req, res, next) {
   if (req.cookies.name){
   console.log("you have accessed signUp page");
@@ -54,6 +72,7 @@ router.get('/signUp', function(req, res, next) {
   }
 });
 
+// GET logout page
 router.get('/logout', function(req, res, next) {
   if (req.cookies.name){
   console.log("you are about to log out");
@@ -65,11 +84,13 @@ router.get('/logout', function(req, res, next) {
   }
 });
 
+// GET Tweet page
 router.get('/tweet', function(req, res, next) {
   console.log("you are about to tweet");
   res.render("tweet");
 });
 
+// GET main page
 router.get('/main', function(req, res, next) {
   if (req.cookies.name){
   var username = req.cookies.name;
@@ -82,6 +103,21 @@ router.get('/main', function(req, res, next) {
   }
 });
 
+// GET delete page - so refresh does not bug out
+router.get('/delete', function(req, res, next) {
+  var allTweets = req.app.locals.tweets;
+  if (req.cookies.name) {
+    res.render('main', {"allTweets": allTweets});
+  }
+  else {
+    res.render('login');
+    console.log("no cookies for you!");
+  }
+});
+
+//////////////////
+///// POSTS //////
+//////////////////
 
 router.post('/signUp', function(req, res, next) {
   console.log("switching to signUp");
@@ -162,11 +198,14 @@ router.post('/delete', function(req, res, next) {
 var allTweets = req.app.locals.tweets;
 var username = req.cookies.name;
 if (_.some(allTweets, "username", username)) {
-allTweets.splice(0,1);
+allTweets.splice(_.findIndex(allTweets, function(chr) {
+  return chr.username == username;}),1);
 res.render('main', {"allTweets": allTweets});
 }
 else {
   res.render('main', {"allTweets": allTweets});
 }
 });
+
+
 module.exports = router;

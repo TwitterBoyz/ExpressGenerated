@@ -1,0 +1,16 @@
+<header>
+  <h1>{{username}}'s profile</h1>
+</header>
+<section>
+  <div id="tweets">
+    {{#each uniqueMessages}}
+    <div class="username">
+      {{username}} wrote: "{{message}}" at {{time}}
+    </div>
+    {{/each}}
+  </div>
+  <form class="tweet" action="/main" method="post">
+    <input type="text" name="message" id = "message" value="">
+    <input type="submit" name="submit" value="Submit">
+  </form>
+</section>
