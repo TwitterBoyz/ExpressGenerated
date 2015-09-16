@@ -1,5 +1,9 @@
 <header>
   <h1>Hello, {{username}}!</h1>
+
+  <form class="editUser" action="/editUser" method="post">
+    <input type="submit" name="submit" value="Edit Profile">
+  </form>
 </header>
 <section>
   <div id="tweets">
@@ -13,4 +17,18 @@
     <input type="text" name="message" id = "message" value="">
     <input type="submit" name="submit" value="Submit">
   </form>
+
+  <div class="info">
+    {{#each info}}
+      <div class="userInfo">
+        Age: {{userInfo.age}}
+        <br>
+        Sex: {{userInfo.sex}}
+        <br>
+        Location: {{userInfo.location}}
+        <br>
+        About me: {{userInfo.aboutMe}}
+      </div>
+    {{/each}}
+  </div>
 </section>

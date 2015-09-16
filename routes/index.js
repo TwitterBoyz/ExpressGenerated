@@ -115,6 +115,16 @@ router.get('/delete', function(req, res, next) {
   }
 });
 
+//GET editUser
+router.get('/editUser', function(req, res, next) {
+  if (req.cookies.name) {
+    res.render('editUser');
+  }
+  else {
+    res.render('user');
+  }
+});
+
 //////////////////
 ///// POSTS //////
 //////////////////
@@ -187,25 +197,53 @@ router.post('/main', function(req, res, next) {
 });
 
 router.post('/user', function(req, res, next) {
- var allTweets = req.app.locals.tweets;
- var username = req.cookies.name;
- var message = req.body.message;
- var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
- res.render('user', {"username": username, "uniqueMessages": uniqueMessages});
+  var age = req.body.age;
+  var sex = req.body.sex;
+  var location = req.body.locate;
+  var aboutMe = req.body.bio;
+  var allTweets = req.app.locals.tweets;
+  var username = req.cookies.name;
+  var message = req.body.message;
+  var objInfo = {'age':age, 'sex':sex, 'location':location, 'aboutMe':aboutMe};
+  var obj = {'username': username, 'userInfo': objInfo};
+  var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
+  console.log(info);
+if (info) {
+  //replace old info
+    //find where info is
+    index = _.findIndex(req.app.locals.userInfo, function(chr) {
+return chr.username == username;
+});
+      //splice old info with new info
+  req.app.locals.userInfo.splice(index, 1, obj);
+  console.log(req.app.locals.userInfo)
+}
+else {
+  //push info into array >>> req.app.locals.userInfo
+  req.app.locals.userInfo.push(obj);
+
+}
+  var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
+  res.render('user', {"username": username, "uniqueMessages": uniqueMessages, 'info': info});
 });
 
 router.post('/delete', function(req, res, next) {
-var allTweets = req.app.locals.tweets;
-var username = req.cookies.name;
-if (_.some(allTweets, "username", username)) {
-allTweets.splice(_.findIndex(allTweets, function(chr) {
-  return chr.username == username;}),1);
-res.render('main', {"allTweets": allTweets});
-}
-else {
+  var allTweets = req.app.locals.tweets;
+  var username = req.cookies.name;
+  if (_.some(allTweets, "username", username)) {
+  allTweets.splice(_.findIndex(allTweets, function(chr) {
+    return chr.username == username;}),1);
   res.render('main', {"allTweets": allTweets});
-}
+  }
+  else {
+    res.render('main', {"allTweets": allTweets});
+  }
 });
 
+
+router.post('/editUser', function(req, res, next) {
+
+  res.render('editUser')
+});
 
 module.exports = router;
