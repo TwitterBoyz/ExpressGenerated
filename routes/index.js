@@ -115,6 +115,10 @@ router.get('/delete', function(req, res, next) {
   }
 });
 
+router.get('/posts', function (req, res, next) {
+res.json({tweets: req.app.locals.tweets});
+});
+
 //////////////////
 ///// POSTS //////
 //////////////////
