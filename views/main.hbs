@@ -2,33 +2,41 @@
 <a href="/tweet">
 <div class="tweet">
   <h1>Tweet</h1>
-
 </div>
 </a>
 <div class="incognito">
   <h1>Switch to Incognito</h1>
 </div>
 <div class="viewProfile">
-  <a href="/user">
-  <h1>View Profile</h1>
-  </a>
+  <form class="user" action="/user" method="post">
+    <input type="submit" name="user" value="View Profile">
+  </form>
 </div>
 </header>
 <div>
-  logout
   <form class="logout" action="/logout" method="post">
     <input type="submit" name="name" value="Log-Out">
   </form>
 </div>
+<audio id="ring">
+<source src="Coin-Mario.mp3">
+</audio>
 <div class="mainBody">
+  <form class="message" action="/main" method="post">
+    <input type="text" name="message" id = "message" value="">
+    <input type="submit" onclick="document.getElementById('ring').play()" name="submit"  value="Submit">
+  </form>
+
   <section>
-  Tweets go here
   <div id="tweets">
     {{#each allTweets}}
-    <!-- <div class="username"> -->
-      {{username}} wrote: {{message}}
-    <!-- </div> -->
-  <!-- {{message}} -->
+    <div class="username">
+      {{username}} wrote: "{{message}}" at {{time}}
+    </div>
   {{/each}}
   </div>
+  <form class="delete" action="/delete" method="post">
+    <input type="submit" name="delete" value="Delete Your Last Post">
+  </form>
 </section>
+</div>
