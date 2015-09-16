@@ -187,19 +187,24 @@ router.post('/logout', function(req, res, next) {
 });
 
 router.post('/main', function(req, res, next) {
-  var username = req.cookies.name;
+//   var username = req.cookies.name;
+//   var message = req.body.message;
+//   var allTweets = req.app.locals.tweets;
+//   var d = new Date();
+//   var month = parseInt(d.getMonth())+1;
+//   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+//   req.app.locals.tweets.unshift({"username": username, "message": message, "time": time});
+//   var tweets = [];
+//   for (var i = 0; i < req.app.locals.tweets.length; i ++) {
+//   tweets.push(req.app.locals.tweets[i].message);
+// }
+//   console.log(req.app.locals.tweets);
+//   res.render("main", {"allTweets": allTweets});
+  var username = req.body.username;
   var message = req.body.message;
-  var allTweets = req.app.locals.tweets;
-  console.log(_.sortByOrder(allTweets), 'time', 'desc');
-  var d = new Date();
-  var month = parseInt(d.getMonth())+1;
-  var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+  var time = req.body.time;
   req.app.locals.tweets.unshift({"username": username, "message": message, "time": time});
-  var tweets = [];
-  for (var i = 0; i < req.app.locals.tweets.length; i ++) {
-  tweets.push(req.app.locals.tweets[i].message);
-}
-  console.log(req.app.locals.tweets);
+  var allTweets = req.app.locals.tweets;
   res.render("main", {"allTweets": allTweets});
 });
 

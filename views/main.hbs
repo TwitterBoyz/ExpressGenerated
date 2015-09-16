@@ -22,9 +22,9 @@
 <source src="Coin-Mario.mp3">
 </audio>
 <div class="mainBody">
-  <form class="message" action="/main" method="post">
+  <form class="message">
     <input type="text" name="message" id = "message" value="">
-    <input type="submit" onclick="firstCallback()" name="submit"  value="Submit">
+    <input type="submit" onsubmit="writeTweet()" name="submit"  value="Submit">
   </form>
 
   <section>
@@ -41,24 +41,21 @@
 </section>
 </div>
 <script type="text/javascript">
-function callback() {
-  console.log("i will check for notifications")
-  $.getJSON("/posts", function (data) {
-      var tweets = data
-      if(data.tweets.length > tweets.tweets.length){
-      console.log("You have new tweets");}
-      else {
-        console.log("no new tweets");
-      }
-});
-
-
-$.post
-
-  function firstCallback() {
-    console.log("callback !")
-    setInterval(callback, 6000)
-    return true;
+  function displayTweets() {
+    $.getJSON("/posts", function(data){
+      var data = data.tweets[0].message;
+      console.log(data);
+        $("#tweets").append('<div>' + data + '</div>');
+    });
   }
+  window.setInterval(displayTweets, 6000);
 
+function writeTweet() {
+  var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  var message = $("#message")[0].value
+  var d = new Date();
+  var month = parseInt(d.getMonth())+1;
+  var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+  $.post('/main', {'username': username, 'message':message, "time": time})
+ }
 </script>
