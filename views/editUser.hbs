@@ -4,7 +4,7 @@
   <input type="submit" name="name" value="Edit">
 </form>
 <div class="age input">
-  Age: {{age}}
+  Age: {{info.age}}
 </div>
 <br>
 <form class="edit" action="/sex" method="post">
@@ -12,7 +12,7 @@
     <input type="submit" name="name" value="Edit">
 </form>
 <div class="">
-  Sex: {{sex}}
+  Sex: {{info.sex}}
 </div>
 <br>
 <form class="edit" action="/location" method="post">
@@ -20,7 +20,7 @@
     <input type="submit" name="name" value="Edit">
 </form>
 <div class="">
-  Location: {{location}}
+  Location: {{info.location}}
 </div>
 <br>
 <form class="edit" action="/about" method="post">
@@ -28,11 +28,11 @@
     <input type="submit" name="name" value="Edit">
 </form>
 <div class="">
-  About me: {{about}}
+  About me: {{info.about}}
 </div>
 <br>
 
-<form class="editAll" action="/user" method="post">
+<form class="editAll" action="/user" method="get">
 
 <input type="submit" name="name" value="Submit Changes">
 </form>

@@ -1,6 +1,10 @@
 <header>
   <h1>Hello, {{username}}!</h1>
-
+  <div class="createProfile">
+    <form class="create" action="/addProfile" method="get">
+      <input type="submit" name="name" value="Create New Profile">
+    </form>
+  </div>
   <form class="editUser" action="/editUser" method="post">
     <input type="submit" name="submit" value="Edit Profile">
   </form>
@@ -19,16 +23,14 @@
   </form>
 
   <div class="info">
-    {{#each info}}
       <div class="userInfo">
-        Age: {{userInfo.age}}
+        Age: {{info.age}}
         <br>
-        Sex: {{userInfo.sex}}
+        Sex: {{info.sex}}
         <br>
-        Location: {{userInfo.location}}
+        Location: {{info.location}}
         <br>
-        About me: {{userInfo.aboutMe}}
+        About me: {{info.aboutMe}}
       </div>
-    {{/each}}
   </div>
 </section>
