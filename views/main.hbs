@@ -22,9 +22,9 @@
 <source src="Coin-Mario.mp3">
 </audio>
 <div class="mainBody">
-  <form class="message">
+  <form class="message" id = "messageForm">
     <input type="text" name="message" id = "message" value="">
-    <input type="submit" onsubmit="writeTweet()" name="submit"  value="Submit">
+    <input type="submit" name="submit" id = "submit" value="Submit">
   </form>
 
   <section>
@@ -43,19 +43,32 @@
 <script type="text/javascript">
   function displayTweets() {
     $.getJSON("/posts", function(data){
-      var data = data.tweets[0].message;
-      console.log(data);
-        $("#tweets").append('<div>' + data + '</div>');
+      var message = data.tweets[0].message;
+      var username = data.tweets[0].username;
+      var time = data.tweets[0].time;
+        $("#tweets").prepend('<div>'+ username + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
-  window.setInterval(displayTweets, 6000);
-
+  // window.setInterval(displayTweets, 6000);
+  $("#submit").click(function(event){
+      var form = $("#message")
+      event.preventDefault();
+      console.log("prevented");
+      writeTweet();
+      form.value = "";
+      displayTweets();
+  });
 function writeTweet() {
   var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   var message = $("#message")[0].value
+  var form = document.getElementById("messageForm")
   var d = new Date();
   var month = parseInt(d.getMonth())+1;
   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
   $.post('/main', {'username': username, 'message':message, "time": time})
+  form.reset()
  }
+
+
+
 </script>
