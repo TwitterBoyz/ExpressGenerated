@@ -24,9 +24,13 @@ router.get('/user', function( req, res, next) {
   var message = req.body.message;
   var allTweets = req.app.locals.tweets;
   var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
+  var index = _.findIndex(req.app.locals.userInfo, function(chr) {
+  return chr.username == username;
+  });
+  var information = info[index].userInfo;
   console.log(info);
   var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
-  res.render('user', {"username": username, "uniqueMessages": uniqueMessages, "info": info});
+  res.render('user', {"username": username, "uniqueMessages": uniqueMessages, "info": information});
 }
   else {
     res.render('login');
@@ -270,12 +274,7 @@ router.post('/age', function(req, res, next){
   req.app.locals.userInfo[index].userInfo.age = age;
   var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
   var information = info[index].userInfo;
-  if ( req.app.locals.userInfo[index].userInfo.age ) {
   res.render('editUser', {"info": information});
-}
-else {
-  req.app.locals.userInfo.push();
-}
 });
 
 router.post('/sex', function(req, res, next){
@@ -354,25 +353,28 @@ router.post('/backToUser', function(req,res,next) {
   var location = req.body.locate;
   var aboutMe = req.body.bio;
   var username = req.cookies.name;
+  var allTweets = req.app.locals.tweets;
   var objInfo = {'age':age, 'sex':sex, 'location':location, 'aboutMe':aboutMe};
   var obj = {'username': username, 'userInfo': objInfo};
   var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
-  res.render('user', {"info": info});
+  var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
   var index = _.findIndex(req.app.locals.userInfo, function(chr) {
   return chr.username == username;
   });
-  if (info) {
+  console.log(info);
+  if (info.length) {
     console.log("info exists");
     req.app.locals.userInfo.splice(index, 1, obj);
-    console.log(req.app.locals.userInfo);
+    var information = info[index].userInfo;
      info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
-      res.render('user', {"username": username, "uniqueMessages": uniqueMessages, 'info': info});
+      res.render('user', {"username": username, "uniqueMessages": uniqueMessages, 'info': information});
   }
   else {
     //push info into array >>> req.app.locals.userInfo
     req.app.locals.userInfo.push(obj);
     info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
-    res.render('user', {"username": username, "uniqueMessages": uniqueMessages, 'info': info});
+    infor = info[0].userInfo;
+    res.render('user', {"username": username, "uniqueMessages": uniqueMessages, 'info': infor});
   }
 });
 
