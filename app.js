@@ -9,8 +9,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+// var objInfo = {'age':age, 'sex':sex, 'location':location, 'aboutMe':aboutMe};
+// var obj = {'username': username, 'userInfo': objInfo};
 
-app.locals.userInfo = [];
+app.locals.userInfo = [{"username": "username", "userInfo": {"age": "age", "sex": "sex", "location": "location", "aboutMe": "aboutMe"}}];
 app.locals.users = [];
 app.locals.tweets = [];
 

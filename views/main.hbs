@@ -7,6 +7,9 @@
 <div class="incognito">
   <h1>Switch to Incognito</h1>
 </div>
+<div class="profile">
+    <a href="javascript:viewProfile()"><h1>View Profile</h1></a>
+</div>
 <div class="viewProfile">
   <form class="user" action="/user" method="get">
     <input type="submit" name="user" value="View Profile">
@@ -41,6 +44,9 @@
 </section>
 </div>
 <script type="text/javascript">
+function viewProfile() {
+  $.get('/user')
+}
   function displayTweets() {
     $.getJSON("/posts", function(data){
       var message = data.tweets[0].message;
