@@ -10,7 +10,7 @@ var _ = require('lodash');
 router.get('/', function(req, res, next) {
   var allTweets = req.app.locals.tweets;
   if (req.cookies.name){
-  res.render("main", {"allTweets": allTweets});}
+    res.render("main", {"allTweets": allTweets});}
   else {
     res.render('login');
     console.log("no cookies for you!");
@@ -24,13 +24,23 @@ router.get('/user', function( req, res, next) {
   var message = req.body.message;
   var allTweets = req.app.locals.tweets;
   var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
+  console.log(info);
+  var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
   var index = _.findIndex(req.app.locals.userInfo, function(chr) {
   return chr.username == username;
   });
-  var information = info[index].userInfo;
+  console.log("before");
   console.log(info);
-  var uniqueMessages = (_.filter(allTweets, {"username": username}, 'messages'));
-  res.render('user', {"username": username, "uniqueMessages": uniqueMessages, "info": information});
+    if(index == -1) {
+      res.render('user', {"username": username, "uniqueMessages": uniqueMessages});
+}
+    else {
+      console.log("after");
+      console.log(info[index]);
+      var information = info[index].userInfo;
+      res.render('user', {"username": username, "uniqueMessages": uniqueMessages, "info": information});
+
+    }
 }
   else {
     res.render('login');
@@ -41,8 +51,9 @@ router.get('/user', function( req, res, next) {
 // GET user profile
 router.get('/user/:username', function(req, res, next) {
   var allTweets = req.app.locals.tweets;
+  var username = req.cookies.name;
   var user = req.params.username;
-  var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
+  var info = (_.filter(req.app.locals.userInfo, {'username': user}, 'userInfo'));
   var uniqueMessages = (_.filter(allTweets, {"username": user}, 'messages'));
   console.log(user);
   if (req.cookies.name){
@@ -169,8 +180,14 @@ router.post('/login', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+  var age = "age";
+  var sex = "sex";
+  var location = "location";
+  var aboutMe = "about me";
   var user_name = req.body.username;
   var password = req.body.password;
+  var objInfo = {'age':age, 'sex':sex, 'location':location, 'aboutMe':aboutMe};
+  var obj = {'username': user_name, 'userInfo': objInfo};
   var tweets = [];
   var allTweets = req.app.locals.tweets;
   for (var i = 0; i < req.app.locals.tweets.length; i ++) {
@@ -180,7 +197,9 @@ router.post('/', function(req, res, next) {
     res.render('login');
   }
   if (_.result(_.find(req.app.locals.users, {'username': user_name}), 'password') == password) {
-  // if (_.some(req.app.locals.users, "password", password)) {
+    req.app.locals.userInfo.unshift(obj);
+    console.log(req.app.locals.userInfo);
+
       console.log("Successful Login!");
           res.cookie('name', user_name);
           res.render("main", {"allTweets": allTweets});
@@ -271,6 +290,7 @@ router.post('/age', function(req, res, next){
   var index = _.findIndex(req.app.locals.userInfo, function(chr) {
   return chr.username == username;
   });
+  console.log(index);
   req.app.locals.userInfo[index].userInfo.age = age;
   var info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
   var information = info[index].userInfo;
@@ -371,7 +391,7 @@ router.post('/backToUser', function(req,res,next) {
   }
   else {
     //push info into array >>> req.app.locals.userInfo
-    req.app.locals.userInfo.push(obj);
+    req.app.locals.userInfo.unshift(obj);
     info = (_.filter(req.app.locals.userInfo, {'username': username}, 'userInfo'));
     infor = info[0].userInfo;
     res.render('user', {"username": username, "uniqueMessages": uniqueMessages, 'info': infor});
