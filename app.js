@@ -14,7 +14,7 @@ var app = express();
 
 app.locals.userInfo = [{"username": "username", "userInfo": {"age": "age", "sex": "sex", "location": "location", "aboutMe": "aboutMe"}}];
 app.locals.users = [];
-app.locals.tweets = [];
+app.locals.tweets = ["poop"];
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

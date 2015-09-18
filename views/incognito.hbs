@@ -1,39 +1,33 @@
 <header>
-  <h1>Hello, {{username}}!</h1>
-  <div class="createProfile">
-    <form class="create" action="/addProfile" method="get">
-      <input type="submit" name="name" value="Create New Profile">
-    </form>
-  </div>
-  <form class="editUser" action="/editUser" method="post">
-    <input type="submit" name="submit" value="Edit Profile">
-  </form>
+<div class="incognito">
+  <a href="/"><h1>Leave Incognito</h1></a>
+</div>
+
 </header>
-<section>
-  <div id="tweets">
-    {{#each uniqueMessages}}
-    <div class="username">
-      You wrote: "{{message}}" at {{time}}
-    </div>
-    {{/each}}
-  </div>
-  <form class="tweet" id="formMessage">
+<div>
+  <form class="logout" action="/logout" method="post">
+    <input type="submit" name="name" value="Log-Out">
+  </form>
+</div>
+<audio id="ring">
+<source src="Coin-Mario.mp3">
+</audio>
+<div class="mainBody">
+  <form class="message" id = "messageForm">
     <input type="text" name="message" id = "message" value="">
     <input type="submit" name="submit" id = "submit" value="Submit">
   </form>
 
-  <div class="info">
-      <div class="userInfo">
-        Age: {{info.age}}
-        <br>
-        Sex: {{info.sex}}
-        <br>
-        Location: {{info.location}}
-        <br>
-        About me: {{info.aboutMe}}
-      </div>
+  <section>
+  <div id="tweets">
+    {{#each allTweets}}
+    <div class="username">
+      {{username}} wrote: "{{message}}" at {{time}}
+    </div>
+  {{/each}}
   </div>
 </section>
+</div>
 <script type="text/javascript">
 function viewProfile() {
   $.get('/user')
@@ -43,16 +37,16 @@ function viewProfile() {
       var message = data.tweets[0].message;
       var username = data.tweets[0].username;
       var time = data.tweets[0].time;
-        $("#tweets").prepend('<div>'+ "You" + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
+        $("#tweets").prepend('<div>'+ 'anonymous' + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
   // window.setInterval(displayTweets, 6000);
   $("#submit").click(function(event){
-      var form = $("#formMessage")
+      var form = $("#message")
       event.preventDefault();
       console.log("prevented");
       writeTweet();
-      $("#formMessage")[0].reset();
+      form.value = "";
       displayTweets();
   });
 function writeTweet() {
@@ -62,8 +56,8 @@ function writeTweet() {
   var d = new Date();
   var month = parseInt(d.getMonth())+1;
   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
-  $.post('/userToUser', {'username': username, 'message':message, "time": time})
-  // form.reset()
+  $.post('/main', {'username': username, 'message':message, "time": time})
+  form.reset()
  }
 
 
