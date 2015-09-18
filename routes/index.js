@@ -121,17 +121,17 @@ router.get('/logout', function(req, res, next) {
 
 
 // GET main page
-router.get('/main', function(req, res, next) {
-  if (req.cookies.name){
-  var username = req.cookies.name;
-  var allTweets = req.app.locals.tweets;
-  res.render("main", {"allTweets": allTweets});
-}
-  else {
-    res.render('login');
-    console.log("no cookies for you!");
-  }
-});
+// router.get('/main', function(req, res, next) {
+//   if (req.cookies.name){
+//   var username = req.cookies.name;
+//   var allTweets = req.app.locals.tweets;
+//   res.render("main", {"allTweets": allTweets});
+// }
+//   else {
+//     res.render('login');
+//     console.log("no cookies for you!");
+//   }
+// });
 
 // GET delete page - so refresh does not bug out
 router.get('/delete', function(req, res, next) {
@@ -147,6 +147,7 @@ router.get('/delete', function(req, res, next) {
 
 router.get('/posts', function (req, res, next) {
 res.json({tweets: req.app.locals.tweets});
+res.end("");
 });
 
 //GET editUser
@@ -219,7 +220,7 @@ router.post('/', function(req, res, next) {
     // }
     }
     else {
-     console.log("Wrong Username/Password Combination");
+     console.log("Wrong Username/Password Combination"); // TODO: Make this do alert client
       res.render('login');
   }
 });
@@ -303,12 +304,6 @@ router.post('/delete', function(req, res, next) {
     res.render('main', {"allTweets": allTweets});
   }
 });
-
-
-router.post('/editUser', function(req, res, next) {
-  res.render('editUser');
-});
-
 
 
 

@@ -1,3 +1,9 @@
+<div id="container">
+<div class="inner">
+  <div>
+  <a href="/logout"><h3>Log Out</h3></a>
+  </div>
+
 <header>
 <div class="incognito">
   <a href="/incognito"><h1>Switch to Incognito</h1></a>
@@ -6,11 +12,6 @@
     <a href="/user"><h1>View Profile</h1></a>
 </div>
 </header>
-<div>
-  <form class="logout" action="/logout" method="post">
-    <input type="submit" name="name" value="Log-Out">
-  </form>
-</div>
 <audio id="ring">
 <source src="Coin-Mario.mp3">
 </audio>
@@ -35,12 +36,14 @@
   </form>
 </section>
 </div>
+</div>
+</div>
 <script type="text/javascript">
 var audio = new Audio('smw_coin.wav');
+var audio2 = new Audio('Coin-Mario.mp3')
 var lastTimeStamp = {{lastTimeStamp}};
-function viewProfile() {
-  $.get('/user')
-}
+
+
   function displayTweets() {
     $.getJSON("/posts", function(data){
       var message = data.tweets[0].message;
@@ -49,20 +52,7 @@ function viewProfile() {
         $("#tweets").prepend('<div>'+ username + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
-function checkTweets() {
-  console.log("this is unix time made by server " + lastTimeStamp);
-  $.getJSON("/posts", function(data){
-    console.log(data);
-    var time = data.tweets[0].lastTimeStamp;
-    console.log("this is unix time pulled from server" + time);
-    if (lastTimeStamp === time) {
-      console.log('no new tweets')
-    }
-    else {
-      console.log("trying to refresh page");
-      window.location.reload(true);    }
-  })
-}
+
 
 
 $("#formsubmit").click(function(event){
@@ -87,6 +77,25 @@ function writeTweet() {
   $.post('/main', {'username': username, 'message':message, "time": time})
   form.reset()
  }
- // window.setInterval(checkTweets, 5000);
+
+function checkTweets(){
+    console.log("this is unix time made by server " + lastTimeStamp);
+   $.getJSON("/posts", function(data){
+     var time = data.tweets[0].date
+     console.log("this is unix time pulled from server " + time);
+     if (time === lastTimeStamp) {
+       console.log('no new tweets')
+     }
+     else {
+       console.log("trying to refresh page");
+       audio2.play()
+       setTimeout(reload, 450);
+   }})
+ }
+
+ function reload(){
+   location.reload();
+ }
+ window.setInterval(checkTweets, 1000);
 
 </script>
