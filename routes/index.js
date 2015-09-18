@@ -421,5 +421,7 @@ router.post('/backToUser', function(req,res,next) {
   }
 });
 
-
+router.post('/update', function(req,res,next){
+  res.send('hello');
+});
 module.exports = router;
