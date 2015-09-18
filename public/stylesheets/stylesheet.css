@@ -1,4 +1,3 @@
-
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -69,12 +68,55 @@ header {
   padding-bottom: 25px;
 }
 
-header h1 {
+header h1{
   font-family: 'Chivo', 'Helvetica Neue', Helvetica, Arial, serif;
-  font-size: 48px; font-weight: 900;
+  font-size: 46px; font-weight: 900;
   line-height: 1.2;
   color: #303030;
   letter-spacing: -1px;
+	text-align: center;
+}
+
+header h4{
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.section1{
+text-align: center;
+padding: 20px;
+background: #f2f2f2;
+border-radius: 15px;
+}
+.mainBody{
+	text-align: center;
+	padding: 20px;
+	background: #f2f2f2;
+	border-radius: 15px;
+}
+#tweets{
+	background: #f2f2f2;
+	border-radius: 15px;
+	padding: 10px;
+}
+.username{
+	text-align: center;
+
+}
+.logoutSections{
+	text-align: center;
+}
+.createProfile{
+	text-align: left;
+}
+
+.tweet{
+	text-align: center;
+	margin: 25px;
+}
+.username{
+	text-align: center;
 }
 
 header h2 {
@@ -83,6 +125,9 @@ header h2 {
   line-height: 1.3;
   color: #aaa;
   letter-spacing: -1px;
+}
+.signUp{
+	text-align: center;
 }
 
 #container {
@@ -152,6 +197,20 @@ a.button span {
   height: 23px;
   padding-left: 50px;
 }
+.logout{
+	text-align: center;
+}
+
+.mainBody{
+margin-left: 108px;
+margin-right: 108px;
+margin-top: 20px;
+}
+
+.mainPageTweet{
+margin-bottom: 15px;
+}
+
 
 #download-zip span {
   background: transparent url(../images/zip-icon.png) 12px 50% no-repeat;
@@ -233,8 +292,6 @@ td {
 }
 
 form {
-  padding: 20px;
-  background: #f2f2f2;
 
 }
 
@@ -252,17 +309,79 @@ h2 {
   color: #303030;
 }
 
-h3 {
+.logoutButton {
   margin-bottom: 8px;
   font-size: 18px;
   font-weight: bold;
   color: #d5000d;
 }
 
+.message{
+	text-align: center;
+}
+.delete{
+	text-align: center;
+}
+
 h4 {
   font-size: 16px;
   font-weight: bold;
   color: #303030;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+h4:hover{
+ color: #993366;
+}
+h1:hover{
+	color:#993366
+}
+
+.profileMenu{
+	padding-right: 470px;
+}
+
+/*input {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9e678b), color-stop(1, #783862));
+	background:-moz-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:-webkit-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:-o-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:-ms-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:linear-gradient(to bottom, #9e678b 5%, #783862 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9e678b', endColorstr='#783862',GradientType=0);
+	background-color:#9e678b;
+	-moz-border-radius:9px;
+	-webkit-border-radius:9px;
+	border-radius:9px;
+	border:2px solid #7a2a5a;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:7px 24px;
+	text-decoration:none;*/
+	text-shadow:0px -1px 0px #5b6178;
+}
+submit:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #783862), color-stop(1, #9e678b));
+	background:-moz-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:-webkit-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:-o-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:-ms-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:linear-gradient(to bottom, #783862 5%, #9e678b 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#783862', endColorstr='#9e678b',GradientType=0);
+	background-color:#783862;
+}
+
+.signUp{
+	text-align: center;
+}
+.toggleSound{
+	text-align: center;
 }
 
 h5 {
@@ -334,6 +453,13 @@ footer a:hover {
   clear: both;
   visibility: hidden;
   content: '.';
+}
+
+.editUser-align{
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: auto;
+	padding-bottom: auto;
 }
 
 .clearfix {display: inline-block;}

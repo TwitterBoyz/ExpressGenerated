@@ -140,6 +140,7 @@ header {
   margin: 0 auto;
   max-width: 600px;
   top: 38px;
+  text-align: center;
 }
 
 header span.ribbon-inner {
@@ -383,6 +384,7 @@ a:hover {
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Open Sans', Myriad, Calibri, sans-serif;
   font-weight: bold;
+  text-align: center;
 }
 
 p {
