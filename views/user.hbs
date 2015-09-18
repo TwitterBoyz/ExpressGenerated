@@ -56,7 +56,6 @@ function viewProfile() {
         $("#tweets").prepend('<div>'+ "You" + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
-
   $("#submit").click(function(event){
       var form = $("#formMessage")
       event.preventDefault();
@@ -75,7 +74,4 @@ function writeTweet() {
   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
   $.post('/userToUser', {'username': username, 'message':message, "time": time})
  }
-
-
-
 </script>

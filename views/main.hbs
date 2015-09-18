@@ -42,8 +42,6 @@
 var audio = new Audio('smw_coin.wav');
 var audio2 = new Audio('Coin-Mario.mp3')
 var lastTimeStamp = {{lastTimeStamp}};
-
-
   function displayTweets() {
     $.getJSON("/posts", function(data){
       var message = data.tweets[0].message;
@@ -52,9 +50,6 @@ var lastTimeStamp = {{lastTimeStamp}};
         $("#tweets").prepend('<div>'+ username + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
-
-
-
 $("#formsubmit").click(function(event){
       var form = $("#message")
       event.preventDefault();
@@ -66,7 +61,6 @@ $("#formsubmit").click(function(event){
       displayTweets();
       console.log("tweet displayed");
   });
-
 function writeTweet() {
   var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   var message = $("#message")[0].value
@@ -77,7 +71,6 @@ function writeTweet() {
   $.post('/main', {'username': username, 'message':message, "time": time})
   form.reset()
  }
-
 function checkTweets(){
     console.log("this is unix time made by server " + lastTimeStamp);
    $.getJSON("/posts", function(data){
@@ -92,10 +85,8 @@ function checkTweets(){
        setTimeout(reload, 450);
    }})
  }
-
  function reload(){
    location.reload();
  }
  window.setInterval(checkTweets, 1000);
-
 </script>
