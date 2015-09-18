@@ -1,5 +1,5 @@
 {
-  "name": "twitterBoyz",
+  "name": "ty",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,27 @@
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
-    "express": "~4.13.1",
+    "express": "^4.13.3",
+    "handlebars": "^4.0.2",
     "hbs": "~3.1.0",
     "js-cookie": "^2.0.3",
     "lodash": "~3.10.1",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {
+    "mocha": "^2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TwitterBoyz/ExpressGenerated.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TwitterBoyz/ExpressGenerated/issues"
+  },
+  "homepage": "https://github.com/TwitterBoyz/ExpressGenerated#readme",
+  "description": ""
 }

@@ -4,10 +4,13 @@
 </div>
 <div id="container">
 <div class="inner">
-  <div>
-  <a href="/logout"><h3>Log Out</h3></a>
-  </div>
-
+  <a href="/logout">
+    <h3>
+    <div class="logoutButton">
+      Log Out
+    </div>
+    </h3>
+  </a>
 <header>
 <div class="incognito">
   <a href="/incognito"><h1>Switch to Incognito</h1></a>
@@ -22,11 +25,16 @@
 <audio id="baring">
 <source src="smw_coin.wav">
 </audio>
-<div class="mainBody">
-  <form class="message" id = "messageForm">
-    <input type="text" name="message" id = "message" value="">
-    <input type="submit" name="submit"  id = "formsubmit" value="Submit">
-  </form>
+<div class="mainPageTweet">
+<form class="message" id = "messageForm">
+  <input type="text" name="message" id = "message" value="">
+  <input type="submit" name="submit"  id = "formsubmit" value="Submit">
+</form>
+<form class="delete" action="/delete" method="post">
+<input type="submit" name="delete" value="Delete Your Last Post">
+</form>
+</div>
+<div class="mainPageBody">
   <section>
   <div id="tweets">
     {{#each allTweets}}
@@ -35,12 +43,13 @@
     </div>
   {{/each}}
   </div>
-  <form class="delete" action="/delete" method="post">
-    <input type="submit" name="delete" value="Delete Your Last Post">
-  </form>
 </section>
 </div>
 </div>
+</div>
+<div class="toggleSound">
+  <button type="button" onclick="soundOff()" name="Hello?">Turn Sound Off</button>
+  <button type="button" onclick="soundOn()" name="button">Turn Sound On</button>
 </div>
 <script type="text/javascript">
 
@@ -67,9 +76,6 @@ function soundOn () {
       var time = data.tweets[0].time;
 $("#tweets").prepend('<div>'+ '<a href = "/user/'+username+'">' + username + '</a>' + " wrote: " + '"' + message + '"' + " at " + time +'</div>');    });
   }
-
-
-
 $("#formsubmit").click(function(event){
       var form = $("#message")
       event.preventDefault();
@@ -83,7 +89,6 @@ $("#formsubmit").click(function(event){
       // displayTweets();
       console.log("tweet displayed");
   });
-
 function writeTweet() {
   var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   var message = $("#message")[0].value
@@ -94,7 +99,6 @@ function writeTweet() {
   $.post('/main', {'username': username, 'message':message, "time": time})
   form.reset()
  }
-
 function checkTweets(){
     console.log("this is unix time made by server " + lastTimeStamp);
    $.getJSON("/posts", function(data){
@@ -125,5 +129,4 @@ function checkTweets(){
    location.reload();
  }
  window.setInterval(checkTweets, 1000);
-
 </script>
