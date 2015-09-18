@@ -99,6 +99,8 @@ border-radius: 15px;
 	background: #f2f2f2;
 	border-radius: 15px;
 	padding: 10px;
+	text-align: center;
+	padding-bottom:20px;
 }
 .username{
 	text-align: center;
@@ -318,6 +320,7 @@ h2 {
 
 .message{
 	text-align: center;
+	padding-bottom: 15px;
 }
 .delete{
 	text-align: center;
@@ -343,7 +346,7 @@ h1:hover{
 	padding-right: 470px;
 }
 
-/*input {
+#buttonID {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9e678b), color-stop(1, #783862));
 	background:-moz-linear-gradient(top, #9e678b 5%, #783862 100%);
 	background:-webkit-linear-gradient(top, #9e678b 5%, #783862 100%);
@@ -363,10 +366,11 @@ h1:hover{
 	font-size:15px;
 	font-weight:bold;
 	padding:7px 24px;
-	text-decoration:none;*/
+	text-decoration:none;
 	text-shadow:0px -1px 0px #5b6178;
+
 }
-submit:hover {
+#buttonID:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #783862), color-stop(1, #9e678b));
 	background:-moz-linear-gradient(top, #783862 5%, #9e678b 100%);
 	background:-webkit-linear-gradient(top, #783862 5%, #9e678b 100%);
@@ -376,6 +380,48 @@ submit:hover {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#783862', endColorstr='#9e678b',GradientType=0);
 	background-color:#783862;
 }
+
+.buttonID {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9e678b), color-stop(1, #783862));
+	background:-moz-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:-webkit-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:-o-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:-ms-linear-gradient(top, #9e678b 5%, #783862 100%);
+	background:linear-gradient(to bottom, #9e678b 5%, #783862 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9e678b', endColorstr='#783862',GradientType=0);
+	background-color:#9e678b;
+	-moz-border-radius:9px;
+	-webkit-border-radius:9px;
+	border-radius:9px;
+	border:2px solid #7a2a5a;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:7px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.buttonID:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #783862), color-stop(1, #9e678b));
+	background:-moz-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:-webkit-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:-o-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:-ms-linear-gradient(top, #783862 5%, #9e678b 100%);
+	background:linear-gradient(to bottom, #783862 5%, #9e678b 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#783862', endColorstr='#9e678b',GradientType=0);
+	background-color:#783862;
+}
+
+#message{
+width:83%;
+height:25px;
+margin-bottom: 20px;
+}
+
+
 
 .signUp{
 	text-align: center;
@@ -460,6 +506,10 @@ footer a:hover {
 	padding-left: 20px;
 	padding-right: auto;
 	padding-bottom: auto;
+	width: 80%;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 20px;
 }
 
 .clearfix {display: inline-block;}

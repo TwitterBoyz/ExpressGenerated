@@ -1,7 +1,3 @@
-<div class="soundOff">
-  <button type="button" onclick="soundOn()" name="button">Turn Sound On</button>
-  <button type="button" onclick="soundOff()" name="Hello?">Turn Sound Off</button>
-</div>
 <div id="container">
 <div class="inner">
   <a href="/logout">
@@ -27,11 +23,11 @@
 </audio>
 <div class="mainPageTweet">
 <form class="message" id = "messageForm">
-  <input type="text" name="message" id = "message" value="">
-  <input type="submit" name="submit"  id = "formsubmit" value="Submit">
+  <textarea type="text" name="message" id = "message" value=""></textarea>
+  <input type="submit" name="submit"  id = "formsubmit" class="buttonID" value="Submit">
 </form>
 <form class="delete" action="/delete" method="post">
-<input type="submit" name="delete" value="Delete Your Last Post">
+<input type="submit" name="delete" class="buttonID" value="Delete Your Last Post">
 </form>
 </div>
 <div class="mainPageBody">
