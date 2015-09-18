@@ -1,19 +1,9 @@
 <header>
-<a href="/tweet">
-<div class="tweet">
-  <h1>Tweet</h1>
-</div>
-</a>
 <div class="incognito">
-  <h1>Switch to Incognito</h1>
+  <a href="/incognito"><h1>Switch to Incognito</h1></a>
 </div>
 <div class="profile">
-    <a href="javascript:viewProfile()"><h1>View Profile</h1></a>
-</div>
-<div class="viewProfile">
-  <form class="user" action="/user" method="get">
-    <input type="submit" name="user" value="View Profile">
-  </form>
+    <a href="/user"><h1>View Profile</h1></a>
 </div>
 </header>
 <div>
@@ -24,12 +14,14 @@
 <audio id="ring">
 <source src="Coin-Mario.mp3">
 </audio>
+<audio id="baring">
+<source src="smw_coin.wav">
+</audio>
 <div class="mainBody">
   <form class="message" id = "messageForm">
     <input type="text" name="message" id = "message" value="">
-    <input type="submit" name="submit" id = "submit" value="Submit">
+    <input type="submit" name="submit"  id = "formsubmit" value="Submit">
   </form>
-
   <section>
   <div id="tweets">
     {{#each allTweets}}
@@ -44,6 +36,8 @@
 </section>
 </div>
 <script type="text/javascript">
+var audio = new Audio('smw_coin.wav');
+var lastTimeStamp = {{lastTimeStamp}};
 function viewProfile() {
   $.get('/user')
 }
@@ -55,15 +49,34 @@ function viewProfile() {
         $("#tweets").prepend('<div>'+ username + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
-  // window.setInterval(displayTweets, 6000);
-  $("#submit").click(function(event){
+function checkTweets() {
+  console.log("this is unix time made by server " + lastTimeStamp);
+  $.getJSON("/posts", function(data){
+    console.log(data);
+    var time = data.tweets[0].lastTimeStamp;
+    console.log("this is unix time pulled from server" + time);
+    if (lastTimeStamp === time) {
+      console.log('no new tweets')
+    }
+    else {
+      console.log("trying to refresh page");
+      window.location.reload(true);    }
+  })
+}
+
+
+$("#formsubmit").click(function(event){
       var form = $("#message")
       event.preventDefault();
       console.log("prevented");
       writeTweet();
+      console.log("tweet written");
       form.value = "";
+      audio.play();
       displayTweets();
+      console.log("tweet displayed");
   });
+
 function writeTweet() {
   var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   var message = $("#message")[0].value
@@ -74,7 +87,6 @@ function writeTweet() {
   $.post('/main', {'username': username, 'message':message, "time": time})
   form.reset()
  }
-
-
+ // window.setInterval(checkTweets, 5000);
 
 </script>
