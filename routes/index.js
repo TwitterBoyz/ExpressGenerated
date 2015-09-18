@@ -258,22 +258,23 @@ router.post('/main', function(req, res, next) {
   req.app.locals.tweets.unshift({"username": username, "message": message, "time": time, "date": date});
   console.log(username);
   var allTweets = req.app.locals.tweets;
-  res.render("main", {"allTweets": allTweets});
-});
-
-
-router.post('/userToUser', function(req, res, next) {
-  var username = req.cookies.name;
-  var message = req.body.message;
-  var date = Date.now();
-  var d = new Date();
-  var month = parseInt(d.getMonth())+1;
-  var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
-  req.app.locals.tweets.unshift({"username": username, "message": message, "time": time, "date": date});
-  var allTweets = req.app.locals.tweets;
-  console.log(allTweets);
+  // res.render("main", {"allTweets": allTweets});
   res.send("");
 });
+
+
+// router.post('/userToUser', function(req, res, next) {
+//   var username = req.cookies.name;
+//   var message = req.body.message;
+//   var date = Date.now();
+//   var d = new Date();
+//   var month = parseInt(d.getMonth())+1;
+//   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+//   req.app.locals.tweets.unshift({"username": username, "message": message, "time": time, "date": date});
+//   var allTweets = req.app.locals.tweets;
+//   console.log(allTweets);
+//   res.send("");
+// });
 
 router.post('/user', function(req, res, next) {
   var age = req.body.age;

@@ -10,9 +10,9 @@
   <h1>Hello, {{username}}!</h1>
 
   <div class="profileMenu">
-  <div class="createProfile">
+  <!-- <div class="createProfile">
   <a href="/addProfile"><h4>Create New Profile</h4></a>
-  </div>
+  </div> -->
 
   <div class="editProfile">
   <a href="/editUser"><h4>Edit Profile</h4></a>
@@ -80,6 +80,85 @@ function writeTweet() {
   var d = new Date();
   var month = parseInt(d.getMonth())+1;
   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
-  $.post('/userToUser', {'username': username, 'message':message, "time": time})
+  $.post('/main', {'username': username, 'message':message, "time": time})
  }
+
+// var audio = new Audio('smw_coin.wav');
+// var audio2 = new Audio('Coin-Mario.mp3')
+// var lastTimeStamp = {{lastTimeStamp}};
+// var soundEnabled = false;
+//
+// function soundOff () {
+//   console.log("Sound Is Off");
+//   soundEnabled = false;
+// }
+//
+// function soundOn () {
+//   console.log("Sound Is On")
+//   soundEnabled = true;
+// }
+//
+//   function displayTweets() {
+//     console.log("displaying tweet");
+//     $.getJSON("/posts", function(data){
+//       var message = data.tweets[0].message;
+//       var username = data.tweets[0].username;
+//       var time = data.tweets[0].time;
+// $("#tweets").prepend('<div>'+ '<a href = "/user/'+username+'">' + username + '</a>' + " wrote: " + '"' + message + '"' + " at " + time +'</div>');    });
+//   }
+// $("#formsubmit").click(function(event){
+//       var form = $("#message")
+//       event.preventDefault();
+//       console.log("prevented");
+//       writeTweet();
+//       console.log("tweet written");
+//       form.value = "";
+//       if (soundEnabled){
+//       audio.play();
+//     }
+//       // displayTweets();
+//       console.log("tweet displayed");
+//   });
+// function writeTweet() {
+//   var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+//   var message = $("#message")[0].value
+//   var form = document.getElementById("messageForm")
+//   var d = new Date();
+//   var now = Date.now();
+//   var month = parseInt(d.getMonth())+1;
+//   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+//   $.post('/main', {'username': username, 'message':message, "time": now})
+//   form.reset()
+//  }
+// function checkTweets(){
+//     // console.log("this is unix time made by server " + lastTimeStamp);
+//    $.getJSON("/posts", function(data){
+//      var time = data.tweets[0].date
+//     //  console.log("this is unix time pulled from server " + time);
+//      if (time === lastTimeStamp) {
+//       //  console.log('no new tweets')
+//      }
+//      else {
+//        console.log("trying to refresh page");
+//        console.log("lasttimestamp: " + lastTimeStamp + " and time: " + time);
+//        if (soundEnabled) {
+//        audio2.play();
+//      }
+//      updateTimeStamp();
+//      displayTweets();
+//      //  setTimeout(reload, 450);
+//    }})
+//  }
+//
+//  function updateTimeStamp() {
+//    console.log("updating time stamp");
+//    $.getJSON("/posts", function(data) {
+//      lastTimeStamp = data.tweets[0].date;
+//    })
+//  }
+//
+//  function reload(){
+//    location.reload();
+//  }
+//  window.setInterval(checkTweets, 1000);
 </script>

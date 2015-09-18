@@ -39,7 +39,7 @@
   <div id="tweets">
     {{#each allTweets}}
     <div class="username">
-      <a href ="/user/{{username}}">{{username}}</a> wrote: "{{message}}" at {{time}}
+      <a href ="/user/{{username}}">{{username}}</a> wrote: "{{message}}" at {{date}}
     </div>
   {{/each}}
   </div>
@@ -55,7 +55,7 @@
 
 var audio = new Audio('smw_coin.wav');
 var audio2 = new Audio('Coin-Mario.mp3')
-var lastTimeStamp = "{{lastTimeStamp}}";
+var lastTimeStamp = {{lastTimeStamp}};
 var soundEnabled = false;
 
 function soundOff () {
@@ -94,21 +94,23 @@ function writeTweet() {
   var message = $("#message")[0].value
   var form = document.getElementById("messageForm")
   var d = new Date();
+  var now = Date.now();
   var month = parseInt(d.getMonth())+1;
   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
-  $.post('/main', {'username': username, 'message':message, "time": time})
+  $.post('/main', {'username': username, 'message':message, "time": now})
   form.reset()
  }
 function checkTweets(){
-    console.log("this is unix time made by server " + lastTimeStamp);
+    // console.log("this is unix time made by server " + lastTimeStamp);
    $.getJSON("/posts", function(data){
      var time = data.tweets[0].date
-     console.log("this is unix time pulled from server " + time);
+    //  console.log("this is unix time pulled from server " + time);
      if (time === lastTimeStamp) {
-       console.log('no new tweets')
+      //  console.log('no new tweets')
      }
      else {
        console.log("trying to refresh page");
+       console.log("lasttimestamp: " + lastTimeStamp + " and time: " + time);
        if (soundEnabled) {
        audio2.play();
      }
