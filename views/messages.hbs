@@ -1,0 +1,19 @@
+<div class="messages">
+  {{#each messages}}
+  <div class="sender">
+    {{sender}} sent {{receiver}}, "{{message}}" at {{time}}
+  </div>
+  <!-- <div class="receiver">
+    {{receiver}}
+  </div>
+  <div class="message">
+    {{message}}
+  </div> -->
+  {{/each}}
+</div>
+<script type="text/javascript">
+var message = {{message}}
+function displayMessage() {
+  console.log(message);
+}
+</script>

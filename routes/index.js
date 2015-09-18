@@ -20,7 +20,8 @@ router.get('/', function(req, res, next) {
     else {
       res.render('login');
     }
-    res.render("main", {"allTweets": allTweets});}
+    //res.render("main", {"allTweets": allTweets});
+  }
   else {
     res.render('login');
     console.log("no cookies for you!");
@@ -120,18 +121,18 @@ router.get('/logout', function(req, res, next) {
 });
 
 
-// GET main page
-// router.get('/main', function(req, res, next) {
-//   if (req.cookies.name){
-//   var username = req.cookies.name;
-//   var allTweets = req.app.locals.tweets;
-//   res.render("main", {"allTweets": allTweets});
-// }
-//   else {
-//     res.render('login');
-//     console.log("no cookies for you!");
-//   }
-// });
+//GET main page
+router.get('/main', function(req, res, next) {
+  if (req.cookies.name){
+  var username = req.cookies.name;
+  var allTweets = req.app.locals.tweets;
+  res.render("main", {"allTweets": allTweets});
+}
+  else {
+    res.render('login');
+    console.log("no cookies for you!");
+  }
+});
 
 // GET delete page - so refresh does not bug out
 router.get('/delete', function(req, res, next) {
@@ -167,6 +168,17 @@ router.get('/addProfile', function(req, res, next) {
 res.render('addProfileInfo');
 });
 
+router.get('/messages', function(req,res,next){
+  var messages = req.app.locals.direct;
+  var receiver = req.cookies.name;
+  var sender = _.filter(req.app.locals.direct, {"receiver": receiver}, 'sender');
+  console.log(sender);
+  var uniqueMessages = [];
+  for (var i = 0; i < sender.length; i ++) {
+  uniqueMessages.push(sender[i]);
+}
+  res.render('messages', {"messages": uniqueMessages});
+});
 //////////////////
 ///// POSTS //////
 //////////////////
@@ -201,13 +213,19 @@ router.post('/', function(req, res, next) {
   var password = req.body.password;
   var objInfo = {'age':age, 'sex':sex, 'location':location, 'aboutMe':aboutMe};
   var obj = {'username': user_name, 'userInfo': objInfo};
-  var tweets = [];
+  // var tweets = [];
+  var date = new Date();
   var allTweets = req.app.locals.tweets;
-  for (var i = 0; i < req.app.locals.tweets.length; i ++) {
-  tweets.push(req.app.locals.tweets[i].message);
-}
+  var lastTimeStamp = date;
+  // for (var i = 0; i < req.app.locals.tweets.length; i ++) {
+  // tweets.push(req.app.locals.tweets[i].message);
+// }
   if(user_name === undefined || password === undefined) {
     res.render('login');
+  }
+  if(user_name === "anonymous") {
+    res.render('login');
+    console.log("YOU CAN'T LOGIN AS THIS!!!");
   }
   if (_.result(_.find(req.app.locals.users, {'username': user_name}), 'password') == password) {
     req.app.locals.userInfo.unshift(obj);
@@ -216,12 +234,12 @@ router.post('/', function(req, res, next) {
       console.log("Successful Login!");
           res.cookie('name', user_name);
           res.cookie('store', user_name);
-          res.render("main", {"allTweets": allTweets});
+          res.render("main", {"allTweets": allTweets, "lastTimeStamp": lastTimeStamp });
     // }
     }
     else {
      console.log("Wrong Username/Password Combination"); // TODO: Make this do alert client
-      res.render('login');
+      res.render('login', {"error": "error"});
   }
 });
 
@@ -424,4 +442,19 @@ router.post('/backToUser', function(req,res,next) {
 router.post('/update', function(req,res,next){
   res.send('hello');
 });
+
+router.post('/directMessage', function(req,res,next) {
+  var sender = req.cookies.name;
+  var receiver = req.body.username;
+  var message = req.body.message;
+  var date = Date.now();
+  var d = new Date();
+  var month = parseInt(d.getMonth())+1;
+  var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+  var obj = {"sender": sender, "receiver": receiver, "message": message, "time": time};
+  req.app.locals.direct.unshift(obj);
+  res.render('user');
+});
+
+
 module.exports = router;

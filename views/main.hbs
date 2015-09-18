@@ -1,3 +1,7 @@
+<div class="soundOff">
+  <button type="button" onclick="soundOn()" name="button">Turn Sound On</button>
+  <button type="button" onclick="soundOff()" name="Hello?">Turn Sound Off</button>
+</div>
 <div id="container">
 <div class="inner">
   <a href="/logout">
@@ -35,7 +39,7 @@
   <div id="tweets">
     {{#each allTweets}}
     <div class="username">
-      {{username}} wrote: "{{message}}" at {{time}}
+      <a href ="/user/{{username}}">{{username}}</a> wrote: "{{message}}" at {{time}}
     </div>
   {{/each}}
   </div>
@@ -48,9 +52,10 @@
   <button type="button" onclick="soundOn()" name="button">Turn Sound On</button>
 </div>
 <script type="text/javascript">
+
 var audio = new Audio('smw_coin.wav');
 var audio2 = new Audio('Coin-Mario.mp3')
-var lastTimeStamp = {{lastTimeStamp}};
+var lastTimeStamp = "{{lastTimeStamp}}";
 var soundEnabled = false;
 
 function soundOff () {
@@ -69,8 +74,7 @@ function soundOn () {
       var message = data.tweets[0].message;
       var username = data.tweets[0].username;
       var time = data.tweets[0].time;
-        $("#tweets").prepend('<div>'+ username + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
-    });
+$("#tweets").prepend('<div>'+ '<a href = "/user/'+username+'">' + username + '</a>' + " wrote: " + '"' + message + '"' + " at " + time +'</div>');    });
   }
 $("#formsubmit").click(function(event){
       var form = $("#message")
