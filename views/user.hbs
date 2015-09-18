@@ -6,15 +6,18 @@
 
 <header>
   <h1>Hello, {{username}}!</h1>
+  <div class="profileMenu">
   <div class="createProfile">
-  <a href="/addProfile"><h4>Create New Profile</h3></a>
+  <a href="/addProfile"><h4>Create New Profile</h4></a>
   </div>
   <div class="editProfile">
-  <a href="/editUser"><h4>Edit Profile</h3></a>
+  <a href="/editUser"><h4>Edit Profile</h4></a>
     </div>
     <div class="Home">
       <a href="/"><h4>Home</h4></a>
     </div>
+  </div>
+
 </header>
 <section>
   <div class="info">
@@ -28,6 +31,7 @@
         About me: {{info.aboutMe}}
       </div>
   </div>
+
   <form class="tweet" id="formMessage">
     <input type="text" name="message" id = "message" value="">
     <input type="submit" name="submit" id = "submit" value="Submit">
@@ -39,7 +43,7 @@
     </div>
     {{/each}}
   </div>
-
+</div>
 </div>
 </div>
 </section>
