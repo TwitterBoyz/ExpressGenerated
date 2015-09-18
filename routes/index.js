@@ -9,7 +9,17 @@ var _ = require('lodash');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var allTweets = req.app.locals.tweets;
+  var lastTimeStamp = req.app.locals.tweets[0].date;
   if (req.cookies.name){
+    if(req.cookies.store){
+      console.log("cookie stored");
+      console.log(lastTimeStamp);
+      res.cookie('name', req.cookies.store);
+      res.render('main', {"allTweets": allTweets, "lastTimeStamp": lastTimeStamp});
+    }
+    else {
+      res.render('login');
+    }
     res.render("main", {"allTweets": allTweets});}
   else {
     res.render('login');
@@ -17,6 +27,13 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/incognito', function(req, res, next) {
+  user_name = "anonymous";
+  var allTweets = req.app.locals.tweets;
+  res.cookie('name', user_name);
+  console.log(req.cookies.secret);
+  res.render('incognito', {"allTweets": allTweets});
+});
 // GET user page
 router.get('/user', function( req, res, next) {
   if (req.cookies.name){
@@ -102,24 +119,19 @@ router.get('/logout', function(req, res, next) {
   }
 });
 
-// GET Tweet page
-router.get('/tweet', function(req, res, next) {
-  console.log("you are about to tweet");
-  res.render("tweet");
-});
 
 // GET main page
-router.get('/main', function(req, res, next) {
-  if (req.cookies.name){
-  var username = req.cookies.name;
-  var allTweets = req.app.locals.tweets;
-  res.render("main", {"allTweets": allTweets});
-}
-  else {
-    res.render('login');
-    console.log("no cookies for you!");
-  }
-});
+// router.get('/main', function(req, res, next) {
+//   if (req.cookies.name){
+//   var username = req.cookies.name;
+//   var allTweets = req.app.locals.tweets;
+//   res.render("main", {"allTweets": allTweets});
+// }
+//   else {
+//     res.render('login');
+//     console.log("no cookies for you!");
+//   }
+// });
 
 // GET delete page - so refresh does not bug out
 router.get('/delete', function(req, res, next) {
@@ -135,6 +147,7 @@ router.get('/delete', function(req, res, next) {
 
 router.get('/posts', function (req, res, next) {
 res.json({tweets: req.app.locals.tweets});
+res.end("");
 });
 
 //GET editUser
@@ -202,11 +215,12 @@ router.post('/', function(req, res, next) {
 
       console.log("Successful Login!");
           res.cookie('name', user_name);
+          res.cookie('store', user_name);
           res.render("main", {"allTweets": allTweets});
     // }
     }
     else {
-     console.log("Wrong Username/Password Combination");
+     console.log("Wrong Username/Password Combination"); // TODO: Make this do alert client
       res.render('login');
   }
 });
@@ -219,13 +233,28 @@ router.post('/logout', function(req, res, next) {
 router.post('/main', function(req, res, next) {
   var username = req.cookies.name;
   var message = req.body.message;
+  var date = Date.now();
   var d = new Date();
   var month = parseInt(d.getMonth())+1;
   var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
-  req.app.locals.tweets.unshift({"username": username, "message": message, "time": time});
+  req.app.locals.tweets.unshift({"username": username, "message": message, "time": time, "date": date});
   console.log(username);
   var allTweets = req.app.locals.tweets;
   res.render("main", {"allTweets": allTweets});
+});
+
+
+router.post('/userToUser', function(req, res, next) {
+  var username = req.cookies.name;
+  var message = req.body.message;
+  var date = Date.now();
+  var d = new Date();
+  var month = parseInt(d.getMonth())+1;
+  var time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+" on "+month+"/"+d.getDate()+"/"+d.getFullYear();
+  req.app.locals.tweets.unshift({"username": username, "message": message, "time": time, "date": date});
+  var allTweets = req.app.locals.tweets;
+  console.log(allTweets);
+  res.send("");
 });
 
 router.post('/user', function(req, res, next) {
@@ -275,12 +304,6 @@ router.post('/delete', function(req, res, next) {
     res.render('main', {"allTweets": allTweets});
   }
 });
-
-
-router.post('/editUser', function(req, res, next) {
-  res.render('editUser');
-});
-
 
 
 

@@ -1,35 +1,28 @@
+<div id="container">
+<div class="inner">
+  <div>
+  <a href="/logout"><h3>Log Out</h3></a>
+  </div>
+
 <header>
-<a href="/tweet">
-<div class="tweet">
-  <h1>Tweet</h1>
-</div>
-</a>
 <div class="incognito">
-  <h1>Switch to Incognito</h1>
+  <a href="/incognito"><h1>Switch to Incognito</h1></a>
 </div>
 <div class="profile">
-    <a href="javascript:viewProfile()"><h1>View Profile</h1></a>
-</div>
-<div class="viewProfile">
-  <form class="user" action="/user" method="get">
-    <input type="submit" name="user" value="View Profile">
-  </form>
+    <a href="/user"><h1>View Profile</h1></a>
 </div>
 </header>
-<div>
-  <form class="logout" action="/logout" method="post">
-    <input type="submit" name="name" value="Log-Out">
-  </form>
-</div>
 <audio id="ring">
 <source src="Coin-Mario.mp3">
+</audio>
+<audio id="baring">
+<source src="smw_coin.wav">
 </audio>
 <div class="mainBody">
   <form class="message" id = "messageForm">
     <input type="text" name="message" id = "message" value="">
-    <input type="submit" name="submit" id = "submit" value="Submit">
+    <input type="submit" name="submit"  id = "formsubmit" value="Submit">
   </form>
-
   <section>
   <div id="tweets">
     {{#each allTweets}}
@@ -43,10 +36,14 @@
   </form>
 </section>
 </div>
+</div>
+</div>
 <script type="text/javascript">
-function viewProfile() {
-  $.get('/user')
-}
+var audio = new Audio('smw_coin.wav');
+var audio2 = new Audio('Coin-Mario.mp3')
+var lastTimeStamp = {{lastTimeStamp}};
+
+
   function displayTweets() {
     $.getJSON("/posts", function(data){
       var message = data.tweets[0].message;
@@ -55,15 +52,21 @@ function viewProfile() {
         $("#tweets").prepend('<div>'+ username + " wrote: " + '"' + message + '"' + " at " + time +'</div>');
     });
   }
-  // window.setInterval(displayTweets, 6000);
-  $("#submit").click(function(event){
+
+
+
+$("#formsubmit").click(function(event){
       var form = $("#message")
       event.preventDefault();
       console.log("prevented");
       writeTweet();
+      console.log("tweet written");
       form.value = "";
+      audio.play();
       displayTweets();
+      console.log("tweet displayed");
   });
+
 function writeTweet() {
   var username = document.cookie.replace(/(?:(?:^|.*;\s*)name\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   var message = $("#message")[0].value
@@ -75,6 +78,24 @@ function writeTweet() {
   form.reset()
  }
 
+function checkTweets(){
+    console.log("this is unix time made by server " + lastTimeStamp);
+   $.getJSON("/posts", function(data){
+     var time = data.tweets[0].date
+     console.log("this is unix time pulled from server " + time);
+     if (time === lastTimeStamp) {
+       console.log('no new tweets')
+     }
+     else {
+       console.log("trying to refresh page");
+       audio2.play()
+       setTimeout(reload, 450);
+   }})
+ }
 
+ function reload(){
+   location.reload();
+ }
+ window.setInterval(checkTweets, 1000);
 
 </script>
