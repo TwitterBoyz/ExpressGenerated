@@ -1,3 +1,7 @@
+<div class="soundOff">
+  <button type="button" onclick="soundOff()" name="Hello?">Turn Sound Off</button>
+  <button type="button" onclick="soundOn()" name="button">Turn Sound On</button>
+</div>
 <div id="container">
 <div class="inner">
   <div>
@@ -42,7 +46,20 @@
 var audio = new Audio('smw_coin.wav');
 var audio2 = new Audio('Coin-Mario.mp3')
 var lastTimeStamp = {{lastTimeStamp}};
+var soundEnabled = false;
+
+function soundOff () {
+  console.log("Sound Is Off");
+  soundEnabled = false;
+}
+
+function soundOn () {
+  console.log("Sound Is On")
+  soundEnabled = true;
+}
+
   function displayTweets() {
+    console.log("displaying tweet");
     $.getJSON("/posts", function(data){
       var message = data.tweets[0].message;
       var username = data.tweets[0].username;
@@ -57,8 +74,10 @@ $("#formsubmit").click(function(event){
       writeTweet();
       console.log("tweet written");
       form.value = "";
+      if (soundEnabled){
       audio.play();
-      displayTweets();
+    }
+      // displayTweets();
       console.log("tweet displayed");
   });
 function writeTweet() {
@@ -81,10 +100,22 @@ function checkTweets(){
      }
      else {
        console.log("trying to refresh page");
-       audio2.play()
-       setTimeout(reload, 450);
+       if (soundEnabled) {
+       audio2.play();
+     }
+     updateTimeStamp();
+     displayTweets();
+     //  setTimeout(reload, 450);
    }})
  }
+
+ function updateTimeStamp() {
+   console.log("updating time stamp");
+   $.getJSON("/posts", function(data) {
+     lastTimeStamp = data.tweets[0].date;
+   })
+ }
+
  function reload(){
    location.reload();
  }
